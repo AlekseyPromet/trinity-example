@@ -1,13 +1,11 @@
 package server
 
-import (
-	"context"
-	"net/http"
-)
+import "github.com/valyala/fasthttp"
 
-type ServerIntf interface {
-	Run(ctx context.Context) error
-	CreateOrder(http.ResponseWriter, *http.Request)
-	UpdateOrder(http.ResponseWriter, *http.Request)
-	DeleteOrder(http.ResponseWriter, *http.Request)
+type ServiceHTTP interface {
+	GetHttpAddress() string
+	Status(ctx *fasthttp.RequestCtx)
+	CreateOrder(ctx *fasthttp.RequestCtx)
+	UpdateOrder(ctx *fasthttp.RequestCtx)
+	DeleteOrder(ctx *fasthttp.RequestCtx)
 }

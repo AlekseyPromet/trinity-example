@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rabbitmq-dev-server
+---
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq-cluster1
+  namespace: rabbitmq-cluster
+spec:
+  replicas: 3
+  service:
+    type: NodePort
+  persistence:
+    storageClassName: managed-nfs-storage
+    storage: 5Gi
+  resources:
+    requsts:
+      cpu: 500m
+      memory: 512M
+    limits:
+      cpu: 500m
+      memory: 512M
+  rabbitmq:
+    additionalPlugins:
+      - rabbitmq_management_agent

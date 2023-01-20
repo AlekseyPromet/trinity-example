@@ -18,13 +18,13 @@ import (
 type serverV1 struct {
 	port   string
 	logger log.Logger
-	srv    handler.ServiceRPC
+	srv    *handler.ServiceRPC
 	ctx    context.Context
 }
 
 var _ ServiceHTTP = (*serverV1)(nil)
 
-func NewService() ServiceHTTP {
+func NewService(ctx context.Context) ServiceHTTP {
 	cfg := &models.ConfigOrder{
 		ConfigPostgres: &models.ConfigPostgres{},
 		ConfigKafka:    &models.ConfigKafka{},
@@ -35,9 +35,12 @@ func NewService() ServiceHTTP {
 		return nil
 	}
 
+	serviceRpc := handler.NewServiceRPC(ctx, cfg)
+
 	srv := &serverV1{
 		port:   cfg.HttpBind,
 		logger: log.NewJSONLogger(os.Stdout),
+		srv:    serviceRpc,
 	}
 
 	return srv

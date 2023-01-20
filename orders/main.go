@@ -16,11 +16,11 @@ import (
 
 func main() {
 
-	srv := server.NewService()
-
 	ctx, cancel := context.WithCancel(context.Background())
 	sigchan := make(chan os.Signal)
 	defer close(sigchan)
+
+	srv := server.NewService(ctx)
 
 	go func() {
 		signal.Notify(sigchan, os.Interrupt)

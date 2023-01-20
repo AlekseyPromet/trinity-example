@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (s *ServiceRPC) MakeDeleteOrder() endpoint.Endpoint {
+func (s *ServiceRPC) MakeDeleteOrderEndpoint() endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (resp interface{}, err error) {
 
 		srcId := request.(string)

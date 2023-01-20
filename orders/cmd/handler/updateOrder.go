@@ -9,7 +9,7 @@ import (
 	"github.com/go-kit/kit/endpoint"
 )
 
-func (s *ServiceRPC) MakeUpdateOrder() endpoint.Endpoint {
+func (s *ServiceRPC) MakeUpdateOrderEndpoint() endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (resp interface{}, err error) {
 
 		mRequest := models.Order{}

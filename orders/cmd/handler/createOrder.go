@@ -31,7 +31,7 @@ func (s *ServiceRPC) MakeStatusEndpoint() endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (resp interface{}, err error) {
 
 		if err := s.DatabaseOrm.Ping(); err != nil {
-			return "Bad", err
+			return "Service unriched", err
 		}
 
 		return "OK", nil
@@ -40,6 +40,12 @@ func (s *ServiceRPC) MakeStatusEndpoint() endpoint.Endpoint {
 
 func (s *ServiceRPC) MakeCreateOrderEndpoint() endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (resp interface{}, err error) {
+
+		select {
+		case <-s.CtxService.Done():
+			return resp, nil
+		default:
+		}
 
 		mRequest := models.Order{}
 		var ok bool

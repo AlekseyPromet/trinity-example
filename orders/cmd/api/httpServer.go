@@ -16,7 +16,7 @@ func NewHTTPServer(addess string, service server.ServiceHTTP) error {
 
 	router.Handle("UPDATE", "/order", service.UpdateOrder)
 
-	router.Handle("DELETE", "/order", service.DeleteOrder)
+	router.Handle("DELETE", "/order/{id}", service.DeleteOrder)
 
 	return fasthttp.ListenAndServe(addess, router.Handler)
 }

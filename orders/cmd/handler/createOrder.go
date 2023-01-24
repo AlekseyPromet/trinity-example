@@ -47,10 +47,10 @@ func (s *ServiceRPC) MakeCreateOrderEndpoint() endpoint.Endpoint {
 		default:
 		}
 
-		mRequest := models.Order{}
+		mRequest := models.OrderReq{}
 		var ok bool
 
-		if mRequest, ok = request.(models.Order); !ok {
+		if mRequest, ok = request.(models.OrderReq); !ok {
 			return nil, errNotParseForm
 		}
 
@@ -69,6 +69,13 @@ func (s *ServiceRPC) MakeCreateOrderEndpoint() endpoint.Endpoint {
 			return nil, err
 		}
 
-		return id.String(), nil
+		mResponse := models.OrderRes{
+			ID:       id,
+			Phone:    mRequest.Phone,
+			Customer: mRequest.Customer,
+			Datetime: mRequest.Datetime,
+		}
+
+		return mResponse, nil
 	}
 }

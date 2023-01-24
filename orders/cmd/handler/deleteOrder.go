@@ -21,7 +21,7 @@ func (s *ServiceRPC) MakeDeleteOrderEndpoint() endpoint.Endpoint {
 
 		update := sq.Update("orders").
 			Set("is_deleted", "true").
-			Set("updated_at", time.Now().Format(time.RFC3339)).
+			Set("updated_at", time.Now()).
 			Where(sq.Eq{"id": id})
 
 		query, args, err := update.ToSql()

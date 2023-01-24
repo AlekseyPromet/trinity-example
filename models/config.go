@@ -5,7 +5,7 @@ type ConfigPostgres struct {
 	PostgresUser      string `env:"POSTGRES_USER"`
 	PosttgresPassword string `env:"POSTGRES_PASSWORD"`
 	HostDB            string `env:"HOST_DB"`
-	PosrtDB           string `env:"PORT_DB"`
+	PortDB            string `env:"PORT_DB"`
 }
 
 type ConfigKafka struct {

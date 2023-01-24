@@ -18,10 +18,10 @@ func NewDatabase(dbname string) *sqlx.DB {
 		log.Fatalln(err)
 	}
 
-	// postgresql://user:password@]netloc:port/dbname[?param1=value1&...]
+	// postgresql://user:password@netloc:port/dbname[?param1=value1&...]
 	connect, err := sqlx.Connect("postgres",
-		fmt.Sprintf("user=%s password=%s host=%s port=%s	dbname=%s sslmode=%s",
-			cfg.PostgresUser, cfg.PostgresUser, cfg.HostDB, cfg.PosrtDB, dbname, "false"),
+		fmt.Sprintf("postgresql://%s:%s@%s:%s/%s?sslmode=%s",
+			cfg.PostgresUser, cfg.PosttgresPassword, cfg.HostDB, cfg.PortDB, dbname, "disable"),
 	)
 
 	if err != nil {

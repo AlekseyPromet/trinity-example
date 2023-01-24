@@ -50,9 +50,13 @@ func (srv *serverV1) GetHttpAddress() string {
 	return ":" + srv.port
 }
 
+func midleware(request *fasthttp.RequestCtx) {
+	request.Response.Header.Add("Content-Type", "application/json; charset=utf-8")
+}
+
 func (sv1 *serverV1) Status(request *fasthttp.RequestCtx) {
 
-	defer request.Response.Header.Add("Content-Type", "application/json; charset=utf-8")
+	midleware(request)
 
 	response, err := sv1.srv.StatusEndpoint(sv1.ctx, nil)
 	if err != nil {
@@ -76,11 +80,11 @@ func (sv1 *serverV1) Status(request *fasthttp.RequestCtx) {
 
 func (sv1 *serverV1) CreateOrder(request *fasthttp.RequestCtx) {
 
-	defer request.Response.Header.Add("Content-Type", "application/json; charset=utf-8")
+	midleware(request)
 
 	body := request.Request.Body()
 
-	order := new(models.Order)
+	order := new(models.OrderReq)
 	err := json.Unmarshal(body, order)
 	if err != nil {
 		request.Response.Header.Add("Error", err.Error())
@@ -95,7 +99,7 @@ func (sv1 *serverV1) CreateOrder(request *fasthttp.RequestCtx) {
 		return
 	}
 
-	if resp, ok := response.(models.Order); ok {
+	if resp, ok := response.(models.OrderRes); ok {
 
 		if body, err := json.Marshal(resp); err == nil {
 			request.SetStatusCode(http.StatusOK)
@@ -111,11 +115,11 @@ func (sv1 *serverV1) CreateOrder(request *fasthttp.RequestCtx) {
 
 func (sv1 *serverV1) UpdateOrder(request *fasthttp.RequestCtx) {
 
-	defer request.Response.Header.Add("Content-Type", "application/json; charset=utf-8")
+	midleware(request)
 
 	body := request.Request.Body()
 
-	order := new(models.Order)
+	order := new(models.OrderRes)
 	err := json.Unmarshal(body, order)
 	if err != nil {
 		request.Response.Header.Add("Error", err.Error())
@@ -130,7 +134,7 @@ func (sv1 *serverV1) UpdateOrder(request *fasthttp.RequestCtx) {
 		return
 	}
 
-	if resp, ok := response.(models.Order); ok {
+	if resp, ok := response.(models.OrderRes); ok {
 
 		if body, err := json.Marshal(resp); err == nil {
 			request.SetStatusCode(http.StatusOK)
@@ -146,7 +150,7 @@ func (sv1 *serverV1) UpdateOrder(request *fasthttp.RequestCtx) {
 
 func (sv1 *serverV1) DeleteOrder(request *fasthttp.RequestCtx) {
 
-	defer request.Response.Header.Add("Content-Type", "application/json; charset=utf-8")
+	midleware(request)
 
 	id := request.UserValue("id")
 

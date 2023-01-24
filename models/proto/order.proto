@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package orders;
+
+import "google/protobuf/timestamp.proto";
+
+service OrderService {
+  rpc GetOrder (OrderID) return (OrderRes) {}
+  rpc CreateOrder (OrderReq) return (OrderRes) {}
+  rpc UpdateOrder (OrderRes) return (OrderRes) {}
+  rpc DeleteOrder (OrderID) return (Status) {}
+}
+  
+message OrderReq {
+  required string Phone = 1;
+  required string Customer = 2;
+  google.protobuf.Timestamp Datetime = 3;
+}
+
+message OrderRes {
+  required string ID = 1;
+  string Phone = 2;
+  string Customer = 3;
+  google.protobuf.Timestamp Datetime = 4;
+  string Error=13;
+}
+
+message OrderID {
+  required string ID = 1;
+}
+
+message Status {
+  required string State=1;
+  string Error=13;
+}

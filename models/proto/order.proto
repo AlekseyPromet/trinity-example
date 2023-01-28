@@ -8,25 +8,26 @@ service OrderService {
   rpc GetOrder (OrderID) return (OrderRes) {}
   rpc CreateOrder (CreateOrderReq) return (OrderRes) {}
   rpc UpdateOrder (UpdateOrderRes) return (OrderRes) {}
-  rpc DeleteOrder (OrderID) return (Status) {}
+  rpc DeleteOrder (Order
+  ID) return (Status) {}
 }
   
 message CreateOrderReq {
-  required string Phone = 1;
-  required string Customer = 2;  
+  required string Customer_id = 2;
+  string Bucket_goods_id = 3;
 }
 
 message UpdateOrderReq {
   required string ID = 1;
-  string Phone = 2;
-  string Customer = 3;
+  string Customer_id = 2;
+  string Bucket_goods_id = 3;
 }
 
 message OrderRes {
   required string ID = 1;
-  string Phone = 2;
-  string Customer = 3;
-  google.protobuf.Timestamp Datetime = 4;
+  string Customer_id = 2;
+  string Bucket_goods_id = 3;
+  google.protobuf.Timestamp Created_at = 4;
   string Error=13;
 }
 

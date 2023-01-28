@@ -6,15 +6,20 @@ import "google/protobuf/timestamp.proto";
 
 service OrderService {
   rpc GetOrder (OrderID) return (OrderRes) {}
-  rpc CreateOrder (OrderReq) return (OrderRes) {}
-  rpc UpdateOrder (OrderRes) return (OrderRes) {}
+  rpc CreateOrder (CreateOrderReq) return (OrderRes) {}
+  rpc UpdateOrder (UpdateOrderRes) return (OrderRes) {}
   rpc DeleteOrder (OrderID) return (Status) {}
 }
   
-message OrderReq {
+message CreateOrderReq {
   required string Phone = 1;
-  required string Customer = 2;
-  google.protobuf.Timestamp Datetime = 3;
+  required string Customer = 2;  
+}
+
+message UpdateOrderReq {
+  required string ID = 1;
+  string Phone = 2;
+  string Customer = 3;
 }
 
 message OrderRes {

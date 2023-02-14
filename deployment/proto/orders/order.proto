@@ -5,29 +5,34 @@ package orders;
 import "google/protobuf/timestamp.proto";
 
 service OrderService {
-  rpc GetOrder (OrderID) return (OrderRes) {}
-  rpc CreateOrder (CreateOrderReq) return (OrderRes) {}
-  rpc UpdateOrder (UpdateOrderRes) return (OrderRes) {}
+  rpc GetOrder (OrderID) return (OrderResponse) {}
+  rpc CreateOrder (CreateOrderRequest) return (OrderResponse) {}
+  rpc UpdateOrder (UpdateOrderRequest) return (OrderResponse) {}
   rpc DeleteOrder (OrderID) return (Status) {}
 }
+
+message ErrorResponse {
+  int32 code = 1;
+  string cause = 2;
+}
   
-message CreateOrderReq {
+message CreateOrderRequest {
   required string Customer_id = 2;
   string Bucket_goods_id = 3;
 }
 
-message UpdateOrderReq {
+message UpdateOrderRequest {
   required string ID = 1;
   string Customer_id = 2;
   string Bucket_goods_id = 3;
 }
 
-message OrderRes {
+message OrderResponse {
   required string ID = 1;
   string Customer_id = 2;
   string Bucket_goods_id = 3;
   google.protobuf.Timestamp Created_at = 4;
-  string Error=13;
+  ErrorResponse Error = 13;
 }
 
 message OrderID {
@@ -36,5 +41,5 @@ message OrderID {
 
 message Status {
   required string State=1;
-  string Error=13;
+  ErrorResponse Error = 13;
 }

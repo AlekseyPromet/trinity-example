@@ -22,12 +22,8 @@ func (s *ServiceRPC) MakeUpdateOrderEndpoint() endpoint.Endpoint {
 			Set("updated_at", mRequest.Datetime).
 			Where(sq.Eq{"id": mRequest.ID})
 
-		if mRequest.Phone != "" {
-			update.Set("phone", mRequest.Phone)
-		}
-
-		if mRequest.Customer != "" {
-			update.Set("customer", mRequest.Customer)
+		if mRequest.Status != "" {
+			update.Set("status", mRequest.Status)
 		}
 
 		query, args, err := update.ToSql()

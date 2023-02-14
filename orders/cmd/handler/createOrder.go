@@ -71,8 +71,7 @@ func (s *ServiceRPC) MakeCreateOrderEndpoint() endpoint.Endpoint {
 
 		mResponse := models.OrderRes{
 			ID:       id,
-			Phone:    mRequest.Phone,
-			Customer: mRequest.Customer,
+			Status:   models.OrderStatusOk,
 			Datetime: mRequest.Datetime,
 		}
 

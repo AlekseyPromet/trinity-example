@@ -10,13 +10,15 @@ func NewHTTPServer(addess string, service server.ServiceHTTP) error {
 
 	router := rt.New()
 
-	router.Handle("GET", "/status", service.Status)
+	groupV1 := router.Group("/v1")
 
-	router.Handle("POST", "/order", service.CreateOrder)
+	groupV1.Handle("GET", "/status", service.Status)
 
-	router.Handle("UPDATE", "/order", service.UpdateOrder)
+	groupV1.Handle("POST", "/order", service.CreateOrder)
 
-	router.Handle("DELETE", "/order/{id}", service.DeleteOrder)
+	groupV1.Handle("UPDATE", "/order", service.UpdateOrder)
+
+	groupV1.Handle("DELETE", "/order/{id}", service.DeleteOrder)
 
 	return fasthttp.ListenAndServe(addess, router.Handler)
 }

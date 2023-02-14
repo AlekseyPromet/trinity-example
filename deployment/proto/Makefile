@@ -4,21 +4,23 @@ MAKE_PATH=$(GOPATH)/bin:/bin/proto:$PATH
 all: clean format gen lint
 
 BUF_VERSION=v1.12.0
+OS=$(shell uname -s)
+ARCH=$(shell uname -n)
 
 .PHONY: buf-install
 buf-install:
-ifeq ($(shell uname -s), Darwin)
+ifeq ($(shell uname -s), Linux)
 	@[ ! -f $(GOPATH)/bin/buf ] || exit 0 && \
 	tmp=$$(mktemp -d) && cd $$tmp && \
 	curl -L -o buf \
-		https://github.com/bufbuild/buf/releases/download/v$(BUF_VERSION)/buf-Darwin-arm64 && \
+		https://github.com/bufbuild/buf/releases/download/v$(BUF_VERSION)/buf-Linux-x86_64 && \
 	mv buf $(GOPATH)/bin && \
 	chmod u+x $(GOPATH)/bin
 else 
 	@[ ! -f $(GOPATH)/bin/buf ] || exit 0 && \
 	tmp=$$(mktemp -d) && cd $$tmp && \
 	curl -L -o buf \
-		https://github.com/bufbuild/buf/releases/download/v$(BUF_VERSION)/buf-Linux-x86_64 && \
+		https://github.com/bufbuild/buf/releases/download/v$(BUF_VERSION)/buf-$(OS)-$(ARCH) && \
 	mv buf $(GOPATH)/bin && \
 	chmod u+x $(GOPATH)/bin/buf
 endif
